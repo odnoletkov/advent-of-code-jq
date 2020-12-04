@@ -1,0 +1,6 @@
+{
+  "*.input": {
+    "make": "make -B %",
+    "start": ":vertical Jqplay -Rn"
+  }
+}
