@@ -2,7 +2,7 @@ def number($range): tonumber | $range[0] <= . and . <= $range[1];
 {amb,blu,brn,gry,grn,hzl,oth} as $ecls |
 [
   [inputs]
-  | recurse(.[(index("")//length)+1:]; length > 0) | .[:index("")] | join(" ")
+  | join(",") | split(",,")[] | split(",") | join(" ")
   | [split(" ")[] | split(":") | {(.[0]):.[1]}] | add
   | try [
     (.byr | number([1920,2002])),
