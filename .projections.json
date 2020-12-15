@@ -4,6 +4,6 @@
     "start": ":vertical Jqplay -Rn"
   },
   "*.jq": {
-    "make": "make %:r"
+    "make": "time make %:r"
   }
 }
