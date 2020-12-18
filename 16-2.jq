@@ -1,34 +1,23 @@
 [inputs] | join(";")/";;" | map(split(";"))
-
-| (
-  [
-    first[]/": "
-    | {(first):[last | split(" or ")[] | split("-") | map(tonumber)]}
-  ] | add
-) as $rules
-
-| (
-  .[1][1:] | first | split(",") | map(tonumber)
-) as $ticket
-
-| [
-  last[1:][] | split(",") | map(
-    tonumber | [
-      . as $field | $rules | to_entries[] | select(
-        .value | any(first <= $field and $field <= last)
-      ).key
-    ]
+| ([
+  first[]/": " | {(first): [last | split(" or ")[] | split("-") | map(tonumber)]}
+] | add) as $rules
+| .[1:] | map([.[1:][] | split(",") | map(tonumber)])
+| .[0] |= first
+| .[1] |= (
+  .[][] |= [
+    . as $field | $rules | to_entries[] | select(
+      .value | any(first <= $field and $field <= last)
+    ).key
+  ]
+  | map(select(all(length != 0)))
+  | transpose | map(
+    reduce .[1:][] as $item (first; . - (. - $item))
   )
-  | select(all(length != 0))
-]
-| transpose | map(
-  reduce .[1:][] as $item (first; . - (. - $item))
+  | to_entries | sort_by(.value | length) | [
+    recurse(.[].value -= first.value | .[1:]; length > 0) | first
+  ] | sort_by(.key) | map(.value | first)
 )
-| last(recurse(
-  (.[] | select(arrays and length == 1) | first) as $match
-  | (.[] | arrays) -= [$match]
-  | map(select(length > 0) // $match)
-))
-| [., $ticket] | transpose
-| map(select(first | startswith("departure")) | last)
+| transpose
+| map(select(last | startswith("departure")) | first)
 | reduce .[] as $i (1; . * $i)
