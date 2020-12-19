@@ -1,15 +1,13 @@
 def parse:
-  {ast:[],text:.}
-  | try last(recurse(
-    if (.text | length) == 0 or .text[:1] == ")" then
-      .text |= .[1:] | error
-    elif .text[:1] == "(" then    # ")"
-      (.text[1:] | parse) as $sub |
-      .ast += [$sub.ast] | .text = $sub.text
+  {ast:[],text:.} | until(
+    (.text | length) == 0 or .text[:1] == ")";
+    if .text[:1] == "(" then    # ")"
+      (.text[1:] | parse) as {$ast,$text} |
+      .ast += [$ast] | .text = $text[1:]
     else
       .ast += [.text[:1]] | .text |= .[1:]
     end
-  )) catch .;
+  );
 
 [
   inputs | gsub(" ";"") | parse.ast
