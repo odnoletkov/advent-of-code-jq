@@ -6,15 +6,10 @@
 ]
 
 | (
-  first | map(
-    split(": ") | {
-      key: first,
-      value: (
-        last | capture("\"(?<symbol>.)\"").symbol
-        // {or: split(" | ") | map(split(" "))}
-      )
-    }
-  ) | from_entries
+  first | map(split(": ")) | INDEX(first) | map_values(
+    last | capture("\"(?<symbol>.)\"").symbol
+    // {or: split(" | ") | map(split(" "))}
+  )
 ) as $rules
 
 | def match($rule):

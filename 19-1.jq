@@ -1,13 +1,9 @@
 [inputs] | join(",")/",," | map(split(","))
 | (
-  first | map(
-    split(": ")
-    | first |= tonumber
-    | last |= (
-      capture("\"(?<symbol>.)\"").symbol
-      // {or: split(" | ") | map(split(" ") | map(tonumber))}
-    )
-  ) | sort_by(first) | map(last)
+  first | map(split(": ")) | INDEX(first) | map_values(
+    last | capture("\"(?<symbol>.)\"").symbol
+    // {or: split(" | ") | map(split(" "))}
+  )
 ) as $rules
 
 | def match($rule):
@@ -19,4 +15,4 @@
     first(match($rule.or[]))
   end;
 
-last | map(select(match($rules[0]) == "")) | length
+last | map(select(match($rules["0"]) == "")) | length
