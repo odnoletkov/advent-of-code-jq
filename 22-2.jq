@@ -6,10 +6,12 @@
       select(all(. != []))
       | (
         if all(first < length) then
-          map(.[1:][:first]) | play // [[],[]] | last != []
+          map(.[1:][:first])
+          | (map(max) + [map(length) | add - 1] | max == first)
+          or (play // [[],[]] | last == [])
         else
-          first[0] < last[0]
-        end
+          first[0] > last[0]
+        end | not
       ) as $swap
       | if $swap then reverse else . end
       | first += map(first)
