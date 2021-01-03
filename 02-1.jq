@@ -1,10 +1,6 @@
 [
   inputs
-  | capture("^(?<min>\\d+)-(?<max>\\d+) (?<alpha>\\w): (?<pass>\\w+)$") // error("fail")
-  | [
-    .min,
-    (.alpha as $alpha | .pass | indices($alpha) | length),
-    .max
-  ]
+  | capture("^(?<min>\\d+)-(?<max>\\d+) (?<alpha>\\w): (?<pass>\\w+)$")
+  | [.min, (.pass/.alpha | length - 1), .max]
   | select(. == sort_by(tonumber))
 ] | length
