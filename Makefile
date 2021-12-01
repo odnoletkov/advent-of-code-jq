@@ -1,4 +1,4 @@
-JQ := $(wildcard *.jq)
+JQ := $(wildcard ????/*.jq)
 TASK := $(JQ:.jq=)
 
 .PHONY: all
@@ -12,7 +12,7 @@ $(TASK) : % : $$(subst -1,,$$(subst -2,,$$(subst +,,$$@))).input %.jq
 %.input:
 	session=$$(security find-generic-password -s adventofcode.com -a me -w) && \
 		curl --fail --output $@ --cookie session="$$session" \
-			"https://adventofcode.com/2020/day/$(*:0%=%)/input"
+		"https://adventofcode.com/$(dir $@)day/$(patsubst 0%,%,$(notdir $*))/input"
 
 .PHONY: save-session
 save-session:
