@@ -1,9 +1,9 @@
 [inputs] | join(",")/",,"
-| (.[1:] | map(split(",") | map(split(" ") | map(select(length > 0))) | . + transpose)) as $board
-| (first/",")
 | first(
-  .[:range(length) + 1] as $sel | $sel
-  | map({(.):0}) | add as $hash | .
-  | $board[] | select(any(all($hash[.] != null)))
-  | flatten | unique - $sel | map(tonumber) | add * ($sel | last | tonumber)
+  (.[1:][] | (split(",") | map(split(" ") | map(select(length > 0))) | . + transpose))
+  + (first/"," | .[:range(length) + 1] | [.]) 
+  | (last | map({(.):0}) | add) as $hash
+  | .[:-1] | select(any(all($hash[.])))
+  | flatten | unique - ($hash | keys) | map(tonumber)
+  | add * ($hash | to_entries | last | .key | tonumber)
 )
