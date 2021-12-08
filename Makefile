@@ -17,3 +17,11 @@ $(TASK) : % : $$(subst -1,,$$(subst -2,,$$(subst +,,$$@))).input %.jq
 .PHONY: save-session
 save-session:
 	security add-generic-password -U -s adventofcode.com -a me -w
+
+POST := $(addsuffix .post,$(JQ))
+
+.PHONY: $(POST)
+$(POST):
+	@echo "# [JQ](https://github.com/odnoletkov/advent-of-code-jq)"
+	@echo
+	@sed "s/^/    /" $(@:.post=)
