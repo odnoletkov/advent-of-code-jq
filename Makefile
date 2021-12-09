@@ -25,3 +25,9 @@ $(POST):
 	@echo "# [JQ](https://github.com/odnoletkov/advent-of-code-jq)"
 	@echo
 	@sed "s/^/    /" $(@:.post=)
+
+today-url:
+	@date +"https://adventofcode.com/%Y/day/%-d"
+
+today-text:
+	@curl --silent --fail "$$(make today-url)" | pandoc -f html -t plain
