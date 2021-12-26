@@ -31,3 +31,6 @@ today-url:
 
 today-text:
 	@curl --silent --fail "$$(make today-url)" | pandoc -f html -t plain
+
+stats:
+	@find . -name \*.jq | cut -c 3-6 | sort | uniq -c
