@@ -1,1 +1,1 @@
-[inputs] | join(",")/",," | map(split(",") | map(tonumber) | add) | max
+[[inputs] | (join(",")/",,")[]/"," | map(tonumber) | add] | max
