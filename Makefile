@@ -26,6 +26,9 @@ $(POST):
 	@echo
 	@sed "s/^/    /" $(@:.post=)
 
+last-post:
+	@make $$(ls ????/??-?.jq | sort | tail -n 1).post
+
 today-url:
 	@date +"https://adventofcode.com/%Y/day/%-d"
 
