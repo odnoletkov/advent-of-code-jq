@@ -37,3 +37,6 @@ today-text:
 
 stats:
 	@find . -name \*.jq | cut -c 3-6 | sort | uniq -c
+
+record:
+	@asciinema rec -c 'vim $$(date +%Y/%d.input)' $$(date +%Y/%d.asciinema)
