@@ -1,9 +1,11 @@
 {
   "*.input": {
+    "type": "input",
     "make": "make -B %",
     "start": ":vertical Jqplay -Rn"
   },
   "*.jq": {
+    "type": "jq",
     "make": "time make %:r"
   },
   "*.swift": {
