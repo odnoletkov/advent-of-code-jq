@@ -9,9 +9,10 @@ all: $(TASK)
 $(TASK) : % : $$(subst -1,,$$(subst -2,,$$(subst +,,$$@))).input %.jq
 	jq --raw-input --null-input --from-file $@.jq $<
 
+ADVENT_OF_CODE_SESSION ?= $(shell security find-generic-password -s adventofcode.com -a me -w)
+
 %.input:
-	session=$$(security find-generic-password -s adventofcode.com -a me -w) && \
-		curl --fail --output $@ --cookie session="$$session" \
+	curl --fail --output $@ --cookie session="${ADVENT_OF_CODE_SESSION}" \
 		"https://adventofcode.com/$(dir $@)day/$(patsubst 0%,%,$(notdir $*))/input"
 
 .PHONY: save-session
