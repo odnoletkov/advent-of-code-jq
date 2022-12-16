@@ -15,6 +15,11 @@ ADVENT_OF_CODE_SESSION ?= $(shell security find-generic-password -s adventofcode
 	curl --fail --output $@ --cookie session="${ADVENT_OF_CODE_SESSION}" \
 		"https://adventofcode.com/$(dir $@)day/$(patsubst 0%,%,$(notdir $*))/input"
 
+%.sample:
+	curl "https://adventofcode.com/$(dir $@)day/$(patsubst 0%,%,$(notdir $*))" \
+		| xmllint --html --xpath "/html/body/main/article/pre[1]/code/text()" - 2>/dev/null \
+		| sed '$${/^$$/d;}' >$@
+
 .PHONY: save-session
 save-session:
 	security add-generic-password -U -s adventofcode.com -a me -w

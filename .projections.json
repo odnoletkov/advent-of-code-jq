@@ -4,6 +4,11 @@
     "make": "make -B %",
     "start": ":vertical Jqplay -Rn"
   },
+  "*.sample": {
+    "type": "sample",
+    "make": "make -B %",
+    "start": ":vertical Jqplay -Rn"
+  },
   "*.jq": {
     "type": "jq",
     "make": "time make %:r"
