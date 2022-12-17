@@ -46,3 +46,7 @@ stats:
 
 record:
 	@asciinema rec -c 'vim $$(date +%Y/%d.input)' $$(date +%Y/%d.asciinema)
+
+codespace:
+	CS="$$(gh codespace list --json repository,name --jq 'INDEX(.repository)["odnoletkov/advent-of-code-jq"].name')"; \
+		gh codespace ssh -c $$CS && echo "Stop $$CS?" && read && gh codespace stop -c $$CS
