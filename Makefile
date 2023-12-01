@@ -28,7 +28,7 @@ POST := $(addsuffix .post,$(JQ))
 
 .PHONY: $(POST)
 $(POST):
-	@echo "# [JQ](https://github.com/odnoletkov/advent-of-code-jq)"
+	@echo "[LANGUAGE: jq] [github](https://github.com/odnoletkov/advent-of-code-jq)"
 	@echo
 	@sed "s/^/    /" $(@:.post=)
 
