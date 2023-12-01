@@ -15,5 +15,5 @@
     )
     | .visited[.next] = .set[.next]
     | .set[.next] |= empty
-  ).visited[last($risk | leaf_paths) | tostring] | select(.)
+  ).visited[last($risk | paths(scalars)) | tostring] | select(.)
 )
