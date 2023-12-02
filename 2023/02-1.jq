@@ -1,8 +1,5 @@
 [
   inputs/":" | select(
-    last/";" | all(
-      ./"," | map(capture("(?<value>\\d+) (?<key>.*)")) | from_entries
-      | .[] |= tonumber | .red <= 12 and .green <= 13 and .blue <= 14
-    )
+    all(last | scan("(\\d+) (.)"); (first | tonumber) <= {r: 12, g: 13, b: 14}[last])
   )[0][5:] | tonumber
 ] | add
