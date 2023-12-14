@@ -15,6 +15,12 @@
     "type": "jq",
     "make": "time make %:r"
   },
+  "*-1.jq": {
+    "alternate": "{}-2.jq"
+  },
+  "*-2.jq": {
+    "alternate": "{}-1.jq"
+  },
   "*.swift": {
     "dispatch": "swiftc -O -o %.out % && time %.out",
     "make": "time swift % && exit 1"
