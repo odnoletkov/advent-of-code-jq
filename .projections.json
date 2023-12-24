@@ -13,6 +13,7 @@
   },
   "*.jq": {
     "type": "jq",
+    "template": "inputs",
     "make": "time make %:r",
     "flagship_buffer_size": 1
   },
