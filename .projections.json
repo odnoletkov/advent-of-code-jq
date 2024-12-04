@@ -22,9 +22,5 @@
   },
   "*-2.jq": {
     "alternate": "{}-1.jq"
-  },
-  "*.swift": {
-    "dispatch": "swiftc -O -o %.out % && time %.out",
-    "make": "time swift % && exit 1"
   }
 }
